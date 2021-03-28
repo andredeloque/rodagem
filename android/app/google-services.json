@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "956378618179",
+    "project_id": "rodagem-6edd3",
+    "storage_bucket": "rodagem-6edd3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956378618179:android:64d45f2a2513c8639b37f6",
+        "android_client_info": {
+          "package_name": "com.rodagem.rodagem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956378618179-0067o86jif655b06agljbc99tirfpn3t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdQjuYpyoYknUaNh-AdB173Mk7VOwMkRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "956378618179-0067o86jif655b06agljbc99tirfpn3t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,4 @@
+io/flutter/plugins/GeneratedPluginRegistrant.java
+ io.flutter.plugins.GeneratedPluginRegistrant
+com/rodagem/rodagem/BuildConfig.java
+ com.rodagem.rodagem.BuildConfig
