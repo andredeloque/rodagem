@@ -115,7 +115,7 @@ class LoginScreen extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           child: FlatButton(
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => RecoverPass()));
+                              Navigator.of(context).pushReplacementNamed('/recovery');
                             },
                             padding: EdgeInsets.zero,
                             child: const Text('Esqueci minha senha'),

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:rodagem/models/user_manager.dart';
 import 'package:rodagem/screens/base/base_screen.dart';
 import 'package:rodagem/screens/login/login_screen.dart';
+import 'package:rodagem/screens/recovery/recovery_pass.dart';
 import 'package:rodagem/screens/signup/signup_screen.dart';
 
 void main() {
@@ -31,6 +32,8 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => LoginScreen());
             case '/signup':
               return MaterialPageRoute(builder: (_) => SignUpScreen());
+            case '/recovery':
+              return MaterialPageRoute(builder: (_) => RecoverPass());
             case '/base':
             default:
               return MaterialPageRoute(builder: (_) => BaseScreen());
