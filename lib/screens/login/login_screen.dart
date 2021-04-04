@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:rodagem/helpers/validators.dart';
 import 'package:rodagem/models/user.dart';
 import 'package:rodagem/models/user_manager.dart';
+import 'file:///C:/Users/Eriks%20Henrique/AndroidStudioProjects/rodagem/lib/screens/recovery/recovery_pass.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -113,7 +114,9 @@ class LoginScreen extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: FlatButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => RecoverPass()));
+                            },
                             padding: EdgeInsets.zero,
                             child: const Text('Esqueci minha senha'),
                           ),
