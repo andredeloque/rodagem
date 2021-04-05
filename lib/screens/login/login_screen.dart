@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:rodagem/helpers/validators.dart';
 import 'package:rodagem/models/user.dart';
 import 'package:rodagem/models/user_manager.dart';
-import 'file:///C:/Users/Eriks%20Henrique/AndroidStudioProjects/rodagem/lib/screens/recovery/recovery_pass.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
