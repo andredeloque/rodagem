@@ -39,8 +39,8 @@ class CustomDrawer extends StatelessWidget {
                 page: 2,
               ),
               DrawerTile(
-                iconData: Icons.location_on,
-                title: 'Teste',
+                iconData: Icons.car_rental,
+                title: 'Todas viagens',
                 page: 3,
               ),
             ],
