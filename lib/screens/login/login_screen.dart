@@ -87,7 +87,7 @@ class LoginScreen extends StatelessWidget {
                                             ));
                                           },
                                           onSuccess: () {
-                                            Navigator.of(context).pop();
+                                            Navigator.of(context).pushReplacementNamed('/base');
                                           });
                                     }
                                   },

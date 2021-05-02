@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:brasil_fields/formatter/real_input_formatter.dart';
-import 'package:brasil_fields/formatter/telefone_input_formatter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commons/commons.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +33,6 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
   final _hectaresController = TextEditingController();
   final _valorController = TextEditingController();
   final _descricaoController = TextEditingController();
-  final _telefoneController = TextEditingController();
 
   List<File> _listaImagens = List();
 
@@ -104,10 +101,9 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
     _cepController.text = _viagens.cep;
     _cidadeController.text = _viagens.cidade;
     _estadoController.text = _viagens.estado;
-    _propriedadeController.text = _viagens.propriedade;
-    _hectaresController.text = _viagens.hectares;
+    _propriedadeController.text = _viagens.empresa;
+    _hectaresController.text = _viagens.peso;
     _valorController.text = _viagens.valor;
-    _telefoneController.text = _viagens.telefone;
     _descricaoController.text = _viagens.descricao;
     listaUrlImagens = _viagens.fotos;
   }
@@ -385,7 +381,7 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
                       ),
                       TextFormField(
                         onSaved: (propriedade) {
-                          _viagens.propriedade = propriedade;
+                          _viagens.empresa = propriedade;
                         },
                         controller: _propriedadeController,
                         keyboardType: TextInputType.text,
@@ -408,7 +404,7 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
                       ),
                       TextFormField(
                         onSaved: (hectares) {
-                          _viagens.hectares = hectares;
+                          _viagens.peso = hectares;
                         },
                         controller: _hectaresController,
                         keyboardType: TextInputType.number,

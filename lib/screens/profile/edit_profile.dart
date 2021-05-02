@@ -137,8 +137,6 @@ class _EditProfileState extends State<EditProfile> {
 
     Map<String, dynamic> dados = snapshot.data;
 
-    //print(dados);
-
     _nickController.text = dados["nick"];
 
     if (dados["urlImagem"] != null) {

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rodagem/screens/profile/edit_profile.dart';
+import 'package:rodagem/screens/viagens/my_viagens.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -71,8 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => EditProfile()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfile()));
                 },
                 child: Card(
                   clipBehavior: Clip.antiAlias,
@@ -134,8 +134,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               RaisedButton(
                 onPressed: () {
-                  //Navigator.push(context,
-                  //MaterialPageRoute(builder: (context) => TerraScreen()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ViagemScreen()));
                 },
                 color: Colors.white,
                 child: Padding(
@@ -163,8 +163,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               RaisedButton(
                 onPressed: () {
-                  //Navigator.push(context,
-                  //MaterialPageRoute(builder: (context) => AddressScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfile()));
                 },
                 color: Colors.white,
                 child: Padding(

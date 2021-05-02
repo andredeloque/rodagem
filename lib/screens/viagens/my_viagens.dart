@@ -83,9 +83,6 @@ class _ViagemScreenState extends State<ViagemScreen> {
     );
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Minhas viagens"),
-        ),
         floatingActionButton: FloatingActionButton(
           foregroundColor: Colors.green,
           child: Icon(

@@ -33,7 +33,7 @@ class ItemViagens extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        viagens.propriedade,
+                        "${viagens.empresa}",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

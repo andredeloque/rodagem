@@ -5,10 +5,9 @@ class RegisterViagens {
   String _cep;
   String _cidade;
   String _estado;
-  String _propriedade;
-  String _hectares;
+  String _empresa;
+  String _peso;
   String _valor;
-  String _telefone;
   String _descricao;
   String _dataPartida;
   String _dataChegada;
@@ -21,10 +20,11 @@ class RegisterViagens {
     this.cep = documentSnapshot["cep"];
     this.cidade = documentSnapshot["cidade"];
     this.estado = documentSnapshot["estado"];
-    this.propriedade = documentSnapshot["propriedade"];
-    this.hectares = documentSnapshot["hectares"];
+    this.dataPartida = documentSnapshot["dataPartida"];
+    this.dataChegada = documentSnapshot["dataChegada"];
+    this.empresa = documentSnapshot["empresa"];
+    this.peso = documentSnapshot["peso"];
     this.valor = documentSnapshot["valor"];
-    this.telefone = documentSnapshot["telefone"];
     this.descricao = documentSnapshot["descricao"];
     this.fotos = List<String>.from(documentSnapshot["fotos"]);
   }
@@ -42,10 +42,11 @@ class RegisterViagens {
       "cep": this.cep,
       "cidade": this.cidade,
       "estado": this.estado,
-      "propriedade": this.propriedade,
-      "hectares": this.hectares,
+      "dataPartida": this.dataPartida,
+      "dataChegada": this.dataChegada,
+      "empresa": this.empresa,
+      "peso": this.peso,
       "valor": this.valor,
-      "telefone": this.telefone,
       "descricao": this.descricao,
       "fotos": this.fotos
     };
@@ -70,26 +71,16 @@ class RegisterViagens {
     _valor = value;
   }
 
-  String get hectares => _hectares;
+  String get peso => _peso;
 
-  set hectares(String value) {
-    _hectares = value;
+  set peso(String value) {
+    _peso = value;
   }
 
-  String get propriedade => _propriedade;
+  String get empresa => _empresa;
 
-  set propriedade(String value) {
-    _propriedade = value;
-  }
-
-  String get dataPartida => _propriedade;
-  set dataPartida(String value) {
-    _dataPartida = value;
-  }
-
-  String get dataChegada => _propriedade;
-  set dataChegada(String value) {
-    _dataChegada = value;
+  set empresa(String value) {
+    _empresa = value;
   }
 
   String get estado => _estado;
@@ -116,9 +107,15 @@ class RegisterViagens {
     _id = value;
   }
 
-  String get telefone => _telefone;
+  String get dataChegada => _dataChegada;
 
-  set telefone(String value) {
-    _telefone = value;
+  set dataChegada(String value) {
+    _dataChegada = value;
+  }
+
+  String get dataPartida => _dataPartida;
+
+  set dataPartida(String value) {
+    _dataPartida = value;
   }
 }

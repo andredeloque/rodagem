@@ -1,30 +1,37 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rodagem/helpers/validators.dart';
 import 'package:rodagem/models/user.dart';
 import 'package:rodagem/models/user_manager.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   final User user = User();
+
+  bool _typeUser = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: const Text('Criar Conta'),
+        title: const Text('Cadastro'),
         centerTitle: true,
       ),
       body: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-        image: DecorationImage(
-        fit: BoxFit.cover,
-        image: AssetImage("imagens/imagem_fundo.jpg")
+          image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage("imagens/imagem_fundo.jpg")
           ),
         ),
         child: Center(
@@ -97,6 +104,23 @@ class SignUpScreen extends StatelessWidget {
                         },
                         onSaved: (pass) => user.confirmPassword = pass,
                       ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          children: [
+                            Text("Transportadora"),
+                            Switch(
+                                value: _typeUser,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    _typeUser = value;
+                                  });
+                                }
+                            ),
+                            Text("Motorista"),
+                          ],
+                        ),
+                      ),
                       const SizedBox(
                         height: 16,
                       ),
@@ -116,23 +140,24 @@ class SignUpScreen extends StatelessWidget {
                               if (user.password != user.confirmPassword) {
                                 scaffoldKey.currentState
                                     .showSnackBar(SnackBar(
-                                  content:
-                                  const Text('Senhas não coincidem!'),
-                                  backgroundColor: Colors.red,
-                                ));
+                                      content: const Text('Senhas não coincidem!'),
+                                      backgroundColor: Colors.red,
+                                      ));
                                 return;
                               }
+
+                              user.typeUser = user.checkTypeUser(_typeUser);
 
                               userManager.signUp(
                                   user: user,
                                   onSuccess: () {
-                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pushReplacementNamed('/base');
                                   },
                                   onFail: (e) {
                                     scaffoldKey.currentState
-                                        .showSnackBar(SnackBar(
-                                      content:
-                                      Text('Falha ao cadastrar: $e'),
+                                        .showSnackBar(
+                                        SnackBar(
+                                          content: Text('Falha ao cadastrar: $e'),
                                       backgroundColor: Colors.red,
                                     ));
                                   });
@@ -144,11 +169,11 @@ class SignUpScreen extends StatelessWidget {
                             AlwaysStoppedAnimation(Colors.white),
                           )
                               : const Text(
-                            'Criar Conta',
+                            'Cadastrar',
                             style: TextStyle(fontSize: 18),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   );
                 },
@@ -157,8 +182,6 @@ class SignUpScreen extends StatelessWidget {
           ),
         ),
       ),
-
-
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rodagem/models/user_manager.dart';
@@ -7,7 +6,6 @@ import 'package:rodagem/screens/base/base_screen.dart';
 import 'package:rodagem/screens/login/login_screen.dart';
 import 'package:rodagem/screens/recovery/recovery_pass.dart';
 import 'package:rodagem/screens/signup/signup_screen.dart';
-import 'package:splashscreen/splashscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,7 +22,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: const Color(0xff990203),
-          scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),
+          scaffoldBackgroundColor: Colors.white,
           appBarTheme: const AppBarTheme(elevation: 0),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
@@ -38,8 +36,9 @@ class MyApp extends StatelessWidget {
             case '/recovery':
               return MaterialPageRoute(builder: (_) => RecoverPass());
             case '/base':
-            default:
               return MaterialPageRoute(builder: (_) => BaseScreen());
+            default:
+              return MaterialPageRoute(builder: (_) => LoginScreen());
           }
         },
       ),

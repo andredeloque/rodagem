@@ -30,17 +30,17 @@ class CustomDrawer extends StatelessWidget {
               ),
               DrawerTile(
                 iconData: Icons.admin_panel_settings,
-                title: 'Perfil',
+                title: 'Meu Perfil',
                 page: 1,
               ),
               DrawerTile(
                 iconData: Icons.playlist_add_check,
-                title: 'Viagens',
+                title: 'Cadastrar viagem',
                 page: 2,
               ),
               DrawerTile(
                 iconData: Icons.car_rental,
-                title: 'Todas viagens',
+                title: 'Minhas viagens',
                 page: 3,
               ),
             ],

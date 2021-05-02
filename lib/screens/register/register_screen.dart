@@ -25,15 +25,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final _cepController = TextEditingController();
-  final _propriedadeController = TextEditingController();
+  final _empresaController = TextEditingController();
   final _cidadeController = TextEditingController();
   final _estadoController = TextEditingController();
-  final _hectaresController = TextEditingController();
+  final _pesoController = TextEditingController();
   final _valorController = TextEditingController();
   final _descricaoController = TextEditingController();
-  final _telefoneController = TextEditingController();
-  final _dataPartida = TextEditingController();
-  final _dataChegada = TextEditingController();
+  final _dataPartidaController = TextEditingController();
+  final _dataChegadaController = TextEditingController();
 
   List<File> _listaImagens = List();
 
@@ -41,7 +40,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     File imagemSelecionada;
 
     imagemSelecionada =
-        //(await ImagePicker().getImage(source: ImageSource.gallery)) as File;
         await ImagePicker.pickImage(source: ImageSource.gallery);
 
     if (imagemSelecionada != null) {
@@ -150,9 +148,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Preencha as informações de sua viagem"),
-      ),
       body: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
         child: Container(
@@ -370,7 +365,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onSaved: (dataPartida) {
                           _viagens.dataPartida = dataPartida;
                         },
-                        controller: _dataPartida,
+                        controller: _dataPartidaController,
                         keyboardType: TextInputType.datetime,
                         validator: (text) {
                           if (text.isEmpty) return "Digite a data da partida";
@@ -393,7 +388,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onSaved: (dataChegada) {
                           _viagens.dataChegada = dataChegada;
                         },
-                        controller: _dataChegada,
+                        controller: _dataChegadaController,
                         keyboardType: TextInputType.datetime,
                         validator: (text) {
                           if (text.isEmpty)
@@ -417,9 +412,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       TextFormField(
                         onSaved: (propriedade) {
-                          _viagens.propriedade = propriedade;
+                          _viagens.empresa = propriedade;
                         },
-                        controller: _propriedadeController,
+                        controller: _empresaController,
                         keyboardType: TextInputType.text,
                         validator: (text) {
                           if (text.isEmpty) return "Digite o nome da Empresa";
@@ -440,9 +435,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       TextFormField(
                         onSaved: (hectares) {
-                          _viagens.hectares = hectares;
+                          _viagens.peso = hectares;
                         },
-                        controller: _hectaresController,
+                        controller: _pesoController,
                         keyboardType: TextInputType.number,
                         validator: (text) {
                           if (text.isEmpty) return "Digite o peso da carga";
@@ -492,30 +487,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      //TextFormField(
-                      //onSaved: (valor) {
-                      //_viagens.telefone = valor;
-                      //},
-                      //controller: _telefoneController,
-                      //keyboardType: TextInputType.number,
-                      //inputFormatters: [
-                      //FilteringTextInputFormatter.digitsOnly,
-                      //TelefoneInputFormatter(),
-                      //],
-                      //validator: (text) {
-                      //if (text.isEmpty) return "Digite o telefone";
-                      //},
-                      //style: TextStyle(fontSize: 20),
-                      //decoration: InputDecoration(
-                      //contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                      //hintText: "telefone",
-                      //filled: true,
-                      //fillColor: Colors.white,
-                      //border: OutlineInputBorder(
-                      //borderRadius: BorderRadius.circular(8),
-                      //),
-                      //),
-                      //),
                       SizedBox(
                         height: 10,
                       ),
@@ -561,7 +532,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                               _dialogContext = context;
 
-                              _salvarViagens()();
+                              _salvarViagens();
                             }
                           },
                           padding: EdgeInsets.fromLTRB(122, 16, 122, 16),

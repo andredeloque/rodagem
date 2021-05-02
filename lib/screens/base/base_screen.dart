@@ -4,7 +4,8 @@ import 'package:rodagem/common/custom_drawer/custom_drawer.dart';
 import 'package:rodagem/models/page_manager.dart';
 import 'package:rodagem/screens/profile/profile_screen.dart';
 import 'package:rodagem/screens/register/register_screen.dart';
-import 'package:rodagem/screens/viagens/viagens.dart';
+import 'package:rodagem/screens/viagens/all_viagens.dart';
+import 'package:rodagem/screens/viagens/my_viagens.dart';
 
 class BaseScreen extends StatelessWidget {
   final PageController pageController = PageController();
@@ -22,7 +23,7 @@ class BaseScreen extends StatelessWidget {
             appBar: AppBar(
               title: const Text('Home'),
             ),
-            body: ViagemScreen(),
+            body: AllViagens(),
           ),
           Scaffold(
             drawer: CustomDrawer(),
@@ -34,14 +35,14 @@ class BaseScreen extends StatelessWidget {
           Scaffold(
             drawer: CustomDrawer(),
             appBar: AppBar(
-              title: const Text('Registrar viagem'),
+              title: const Text('Cadastrar viagem'),
             ),
             body: RegisterScreen(),
           ),
           Scaffold(
             drawer: CustomDrawer(),
             appBar: AppBar(
-              title: const Text('Todas as viagens'),
+              title: const Text('Minhas viagens'),
             ),
             body: ViagemScreen(),
           ),
