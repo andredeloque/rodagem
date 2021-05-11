@@ -163,8 +163,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         initialValue: _listaImagens,
                         validator: (imagens) {
                           if (imagens.length == 0) {
-                            //return "Por favor, tire uma foto da nota fiscal";
-                            return null;
+                            return "Por favor, tire uma foto da nota fiscal";
+                            //return null;
                           }
                           return null;
                         },
