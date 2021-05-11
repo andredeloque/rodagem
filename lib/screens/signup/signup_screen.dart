@@ -4,16 +4,17 @@ import 'package:rodagem/helpers/validators.dart';
 import 'package:rodagem/models/user.dart';
 import 'package:rodagem/models/user_manager.dart';
 
+enum SingingCharacter { motorista, transportadora }
+
 class SignUpScreen extends StatefulWidget {
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  SingingCharacter _character = SingingCharacter.motorista;
   final User user = User();
 
   bool _typeUser = false;
@@ -30,9 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage("imagens/imagem_fundo.jpg")
-          ),
+              fit: BoxFit.cover, image: AssetImage("imagens/imagem_fundo.jpg")),
         ),
         child: Center(
           child: Card(
@@ -47,7 +46,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     children: <Widget>[
                       TextFormField(
                         decoration:
-                        const InputDecoration(hintText: 'Nome Completo'),
+                            const InputDecoration(hintText: 'Nome Completo'),
                         enabled: !userManager.loading,
                         validator: (name) {
                           if (name.isEmpty)
@@ -93,7 +92,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       TextFormField(
                         decoration:
-                        const InputDecoration(hintText: 'Repita a Senha'),
+                            const InputDecoration(hintText: 'Repita a Senha'),
                         obscureText: true,
                         enabled: !userManager.loading,
                         validator: (pass) {
@@ -107,8 +106,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Padding(
                         padding: EdgeInsets.only(bottom: 10),
                         child: Row(
-                          children: [
-                            Text("Transportadora"),
+                          children: <Widget>[
+                            ListTile(
+                              title: const Text('Katia'),
+                              leading: Radio<SingingCharacter>(
+                                value: SingingCharacter.motorista,
+                                groupValue: _character,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _character = value;
+                                  });
+                                },
+                              ),
+                            ),
+                            ListTile(
+                              title: const Text('André'),
+                              leading: Radio<SingingCharacter>(
+                                value: SingingCharacter.transportadora,
+                                groupValue: _character,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _character = value;
+                                  });
+                                },
+                              ),
+                            ),
+                            /*Text("Transportadora"),
+                            const SizedBox(
+                              height: 16,
+                              width: 16,
+                            ),
                             Switch(
                                 value: _typeUser,
                                 onChanged: (bool value) {
@@ -117,7 +144,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   });
                                 }
                             ),
-                            Text("Motorista"),
+                            Text("Motorista"),*/
                           ],
                         ),
                       ),
@@ -129,49 +156,52 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: RaisedButton(
                           color: Theme.of(context).primaryColor,
                           disabledColor:
-                          Theme.of(context).primaryColor.withAlpha(100),
+                              Theme.of(context).primaryColor.withAlpha(100),
                           textColor: Colors.white,
                           onPressed: userManager.loading
                               ? null
                               : () {
-                            if (formKey.currentState.validate()) {
-                              formKey.currentState.save();
+                                  if (formKey.currentState.validate()) {
+                                    formKey.currentState.save();
 
-                              if (user.password != user.confirmPassword) {
-                                scaffoldKey.currentState
-                                    .showSnackBar(SnackBar(
-                                      content: const Text('Senhas não coincidem!'),
-                                      backgroundColor: Colors.red,
+                                    if (user.password != user.confirmPassword) {
+                                      scaffoldKey.currentState
+                                          .showSnackBar(SnackBar(
+                                        content:
+                                            const Text('Senhas não coincidem!'),
+                                        backgroundColor: Colors.red,
                                       ));
-                                return;
-                              }
+                                      return;
+                                    }
 
-                              user.typeUser = user.checkTypeUser(_typeUser);
+                                    user.typeUser =
+                                        user.checkTypeUser(_typeUser);
 
-                              userManager.signUp(
-                                  user: user,
-                                  onSuccess: () {
-                                    Navigator.of(context).pushReplacementNamed('/base');
-                                  },
-                                  onFail: (e) {
-                                    scaffoldKey.currentState
-                                        .showSnackBar(
-                                        SnackBar(
-                                          content: Text('Falha ao cadastrar: $e'),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  });
-                            }
-                          },
+                                    userManager.signUp(
+                                        user: user,
+                                        onSuccess: () {
+                                          Navigator.of(context)
+                                              .pushReplacementNamed('/base');
+                                        },
+                                        onFail: (e) {
+                                          scaffoldKey.currentState
+                                              .showSnackBar(SnackBar(
+                                            content:
+                                                Text('Falha ao cadastrar: $e'),
+                                            backgroundColor: Colors.red,
+                                          ));
+                                        });
+                                  }
+                                },
                           child: userManager.loading
                               ? CircularProgressIndicator(
-                            valueColor:
-                            AlwaysStoppedAnimation(Colors.white),
-                          )
+                                  valueColor:
+                                      AlwaysStoppedAnimation(Colors.white),
+                                )
                               : const Text(
-                            'Cadastrar',
-                            style: TextStyle(fontSize: 18),
-                          ),
+                                  'Cadastrar',
+                                  style: TextStyle(fontSize: 18),
+                                ),
                         ),
                       ),
                     ],

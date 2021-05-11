@@ -15,21 +15,17 @@ class _DetailScreenState extends State<DetailScreen> {
   RegisterViagens _viagem;
 
   List<Widget> _getListaImagens() {
-
     List<String> listaUrlImagens = _viagem.fotos;
 
     return listaUrlImagens.map((url) {
       return Container(
         height: 250,
         decoration: BoxDecoration(
-          image: DecorationImage(
-              image: NetworkImage(url),
-              fit: BoxFit.fitWidth
-          ),
+          image:
+              DecorationImage(image: NetworkImage(url), fit: BoxFit.fitWidth),
         ),
       );
     }).toList();
-
   }
 
   @override
@@ -54,7 +50,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   images: _getListaImagens(),
                   dotSize: 8,
                   dotBgColor: Colors.transparent,
-                  dotColor: Colors.white,
+                  dotColor: Colors.black,
                   autoplay: false,
                   dotIncreasedColor: Colors.greenAccent,
                 ),
@@ -64,20 +60,22 @@ class _DetailScreenState extends State<DetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("R\$ ${_viagem.valor}",
+                    Text(
+                      "R\$ ${_viagem.valor}",
                       style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
-                          color: Colors.green
-                      ),
+                          color: Colors.green),
                     ),
-                    Text("${_viagem.empresa}",
+                    Text(
+                      "${_viagem.empresa}",
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    Text("${_viagem.cidade} - ${_viagem.estado}",
+                    Text(
+                      "${_viagem.cidade} - ${_viagem.estado}",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
@@ -87,13 +85,15 @@ class _DetailScreenState extends State<DetailScreen> {
                       padding: EdgeInsets.symmetric(vertical: 16),
                       child: Divider(),
                     ),
-                    Text("Data Partida",
+                    Text(
+                      "Data Partida",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text("${_viagem.dataPartida}",
+                    Text(
+                      "${_viagem.dataPartida}",
                       style: TextStyle(
                         fontSize: 18,
                       ),
@@ -102,13 +102,15 @@ class _DetailScreenState extends State<DetailScreen> {
                       padding: EdgeInsets.symmetric(vertical: 16),
                       child: Divider(),
                     ),
-                    Text("Data Chegada",
+                    Text(
+                      "Data Chegada",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text("${_viagem.dataChegada}",
+                    Text(
+                      "${_viagem.dataChegada}",
                       style: TextStyle(
                         fontSize: 18,
                       ),
@@ -117,13 +119,15 @@ class _DetailScreenState extends State<DetailScreen> {
                       padding: EdgeInsets.symmetric(vertical: 16),
                       child: Divider(),
                     ),
-                    Text("Descrição",
+                    Text(
+                      "Descrição",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text("${_viagem.descricao}",
+                    Text(
+                      "${_viagem.descricao}",
                       style: TextStyle(
                         fontSize: 18,
                       ),
@@ -132,13 +136,15 @@ class _DetailScreenState extends State<DetailScreen> {
                       padding: EdgeInsets.symmetric(vertical: 16),
                       child: Divider(),
                     ),
-                    Text("Peso",
+                    Text(
+                      "Peso",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text("${_viagem.peso}",
+                    Text(
+                      "${_viagem.peso}",
                       style: TextStyle(
                         fontSize: 18,
                       ),

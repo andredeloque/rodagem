@@ -487,9 +487,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
                       TextFormField(
                         onSaved: (descricao) {
                           _viagens.descricao = descricao;
