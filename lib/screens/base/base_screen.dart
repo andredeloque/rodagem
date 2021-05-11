@@ -32,13 +32,13 @@ class BaseScreen extends StatelessWidget {
             ),
             body: ProfileScreen(),
           ),
-          Scaffold(
-            drawer: CustomDrawer(),
-            appBar: AppBar(
-              title: const Text('Cadastrar viagem'),
-            ),
-            body: RegisterScreen(),
-          ),
+          //Scaffold(
+          //  drawer: CustomDrawer(),
+          //  appBar: AppBar(
+          //    title: const Text('Cadastrar viagem'),
+          //  ),
+          //  body: RegisterScreen(),
+          //),
           Scaffold(
             drawer: CustomDrawer(),
             appBar: AppBar(
