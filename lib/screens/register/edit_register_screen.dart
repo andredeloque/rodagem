@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:rodagem/models/detail_viagens.dart';
+import 'package:rodagem/models/register_viagem.dart';
 
 class EditRegisterScreen extends StatefulWidget {
-  DetailViagens viagens;
+  RegisterViagem viagens;
   EditRegisterScreen(this.viagens);
 
   @override
@@ -20,7 +20,7 @@ class EditRegisterScreen extends StatefulWidget {
 }
 
 class _EditRegisterScreebState extends State<EditRegisterScreen> {
-  DetailViagens _viagens;
+  RegisterViagem _viagens;
 
   BuildContext _dialogContext;
 

@@ -4,7 +4,7 @@ import 'package:brasil_fields/formatter/real_input_formatter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commons/commons.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:rodagem/models/detail_viagens.dart';
+import 'package:rodagem/models/register_viagem.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  DetailViagens _viagens;
+  RegisterViagem _viagens;
 
   BuildContext _dialogContext;
 
@@ -174,7 +174,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void initState() {
     super.initState();
-    _viagens = DetailViagens.gerarId();
+    _viagens = RegisterViagem.gerarId();
   }
 
   @override

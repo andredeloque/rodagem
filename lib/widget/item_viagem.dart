@@ -1,8 +1,8 @@
-import 'package:rodagem/models/detail_viagens.dart';
+import 'package:rodagem/models/register_viagem.dart';
 import 'package:flutter/material.dart';
 
 class ItemViagens extends StatelessWidget {
-  DetailViagens viagens;
+  RegisterViagem viagens;
   VoidCallback onTapItem;
   VoidCallback onPreddedRemover;
 

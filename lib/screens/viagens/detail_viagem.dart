@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rodagem/models/detail_viagens.dart';
+import 'package:rodagem/models/register_viagem.dart';
 
 class DetailScreen extends StatefulWidget {
-  DetailViagens viagem;
+  RegisterViagem viagem;
 
   DetailScreen(this.viagem);
 
@@ -16,7 +16,7 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  DetailViagens _viagem;
+  RegisterViagem _viagem;
 
   String _idUsuarioLogado;
   String _typeUser;

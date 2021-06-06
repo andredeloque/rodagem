@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DetailViagens {
+class RegisterViagem {
   String _id;
   String _cep;
   String _cidade;
@@ -11,14 +11,14 @@ class DetailViagens {
   String _produto;
   String _dataPartida;
   String _dataChegada;
-  String _statusPagamento;
+  String _statusPagamento  = "Sem Pagamento";
   String _cidadeOrigem;
   String _cidadeDestino;
   List<String> _fotos;
 
-  DetailViagens();
+  RegisterViagem();
 
-  DetailViagens.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
+  RegisterViagem.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
     this.id = documentSnapshot.documentID;
     this.cep = documentSnapshot["cep"];
     this.cidade = documentSnapshot["cidade"];
@@ -35,7 +35,7 @@ class DetailViagens {
     this.fotos = List<String>.from(documentSnapshot["fotos"]);
   }
 
-  DetailViagens.gerarId() {
+  RegisterViagem.gerarId() {
     Firestore db = Firestore.instance;
     CollectionReference arrendamento = db.collection("minhas_viagens");
     this.id = arrendamento.document().documentID;
