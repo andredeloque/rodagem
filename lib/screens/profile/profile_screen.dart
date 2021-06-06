@@ -134,35 +134,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               RaisedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ViagemScreen()));
-                },
-                color: Colors.white,
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        'VIAGENS',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black54,
-                        ),
-                      ),
-                      Icon(
-                        Icons.map,
-                        color: Colors.black,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              RaisedButton(
-                onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfile()));
                 },
                 color: Colors.white,

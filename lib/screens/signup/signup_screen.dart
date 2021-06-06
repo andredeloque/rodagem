@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:rodagem/helpers/validators.dart';
 import 'package:rodagem/models/user.dart';
 import 'package:rodagem/models/user_manager.dart';
+import 'package:validadores/ValidarEmail.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -105,6 +106,43 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         onSaved: (pass) => user.confirmPassword = pass,
                       ),
                       Padding(
+                        padding: EdgeInsets.all(0),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: RadioListTile(
+                                    title: Text("Transp."),
+                                    controlAffinity: ListTileControlAffinity.leading,
+                                    value: true,
+                                    groupValue: _typeUser,
+                                    onChanged: (bool choice) {
+                                      setState(() {
+                                        _typeUser = choice;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Expanded(
+                                  child: RadioListTile(
+                                    title: Text("Mot."),
+                                    controlAffinity: ListTileControlAffinity.leading,
+                                    value: false,
+                                    groupValue: _typeUser,
+                                    onChanged: (bool choice) {
+                                      setState(() {
+                                        _typeUser = choice;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      /*Padding(
                         padding: EdgeInsets.only(bottom: 10),
                         child: Row(
                           children: [
@@ -120,7 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Text("Motorista"),
                           ],
                         ),
-                      ),
+                      ),*/
                       const SizedBox(
                         height: 16,
                       ),

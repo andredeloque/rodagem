@@ -10,7 +10,10 @@ class RegisterViagens {
   String _empresa;
   String _peso;
   String _valor;
-  String _descricao;
+  String _produto;
+  String _cidadeOrigem;
+  String _cidadeDestino;
+  String _statusPagamento = "Sem Pagamento";
   List<String> _fotos;
 
   RegisterViagens();
@@ -25,7 +28,10 @@ class RegisterViagens {
     this.empresa = documentSnapshot["empresa"];
     this.peso = documentSnapshot["peso"];
     this.valor = documentSnapshot["valor"];
-    this.descricao = documentSnapshot["descricao"];
+    this.produto = documentSnapshot["produto"];
+    this.cidadeOrigem = documentSnapshot["cidadeOrigem"];
+    this.cidadeDestino = documentSnapshot["cidadeDestino"];
+    this.statusPagamento = documentSnapshot["statusPagamento"];
     this.fotos = List<String>.from(documentSnapshot["fotos"]);
   }
 
@@ -47,10 +53,26 @@ class RegisterViagens {
       "empresa": this.empresa,
       "peso": this.peso,
       "valor": this.valor,
-      "descricao": this.descricao,
+      "produto": this.produto,
+      "cidadeOrigem": this.cidadeOrigem,
+      "cidadeDestino": this.cidadeDestino,
+      "statusPagamento": this.statusPagamento,
       "fotos": this.fotos
     };
     return map;
+  }
+
+
+  String get cidadeOrigem => _cidadeOrigem;
+
+  set cidadeOrigem(String value) {
+    _cidadeOrigem = value;
+  }
+
+  String get statusPagamento => _statusPagamento;
+
+  set statusPagamento(String value) {
+    _statusPagamento = value;
   }
 
   List<String> get fotos => _fotos;
@@ -59,10 +81,11 @@ class RegisterViagens {
     _fotos = value;
   }
 
-  String get descricao => _descricao;
 
-  set descricao(String value) {
-    _descricao = value;
+  String get produto => _produto;
+
+  set produto(String value) {
+    _produto = value;
   }
 
   String get valor => _valor;
@@ -117,5 +140,11 @@ class RegisterViagens {
 
   set dataPartida(String value) {
     _dataPartida = value;
+  }
+
+  String get cidadeDestino => _cidadeDestino;
+
+  set cidadeDestino(String value) {
+    _cidadeDestino = value;
   }
 }

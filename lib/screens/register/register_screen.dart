@@ -3,7 +3,8 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:brasil_fields/formatter/real_input_formatter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commons/commons.dart';
-import 'package:rodagem/models/register_viagens.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:rodagem/models/detail_viagens.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +19,13 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  RegisterViagens _viagens;
+  DetailViagens _viagens;
 
   BuildContext _dialogContext;
 
   final _formKey = GlobalKey<FormState>();
+
+  var maskData = new MaskTextInputFormatter(mask: '##/##/####');
 
   final _cepController = TextEditingController();
   final _empresaController = TextEditingController();
@@ -30,7 +33,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _estadoController = TextEditingController();
   final _pesoController = TextEditingController();
   final _valorController = TextEditingController();
-  final _descricaoController = TextEditingController();
+  final _produtoController = TextEditingController();
+  final _cidadeOrigemController = TextEditingController();
+  final _cidadeDestinoController = TextEditingController();
   final _dataPartidaController = TextEditingController();
   final _dataChegadaController = TextEditingController();
 
@@ -47,6 +52,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _listaImagens.add(imagemSelecionada);
       });
     }
+  }
+
+  _abrirDialogDatas(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Icon(Icons.calendar_today_outlined, color: Colors.red, size: 60,),
+                Text("Datas Incorretas"),
+              ],
+            ),
+          );
+        });
   }
 
   _abrirDialog(BuildContext context) {
@@ -70,6 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   _salvarViagens() async {
+
     _abrirDialog(_dialogContext);
 
     await _uploadImagens();
@@ -92,9 +114,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
           .setData(_viagens.toMap())
           .then((_) {
         Navigator.pop(_dialogContext);
-        Navigator.pop(context);
+        Navigator.of(context).pushReplacementNamed('/base');
       });
     });
+  }
+
+  _validarDatas() {
+    DateTime dataPartida = DateFormat("dd/MM/yyyy").parse(_dataPartidaController.text);
+    DateTime dataChegada = DateFormat("dd/MM/yyyy").parse(_dataChegadaController.text);
+    if(dataChegada.isBefore(dataPartida) == false) {
+      _salvarViagens();
+    } else {
+      _abrirDialogDatas(context);
+    }
   }
 
   Future _uploadImagens() async {
@@ -142,7 +174,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void initState() {
     super.initState();
-    _viagens = RegisterViagens.gerarId();
+    _viagens = DetailViagens.gerarId();
   }
 
   @override
@@ -356,19 +388,78 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                       ),
-                      //teste
-                      //
                       SizedBox(
                         height: 10,
                       ),
                       TextFormField(
+                        onSaved: (cidadeOrigem) {
+                          _viagens.cidadeOrigem = cidadeOrigem;
+                        },
+                        controller: _cidadeOrigemController,
+                        validator: (text) {
+                          if (text.isEmpty) return "Digite a cidade de origem";
+                        },
+                        style: TextStyle(fontSize: 20),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
+                          hintText: "cidade origem",
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        onSaved: (cidadeDestino) {
+                          _viagens.cidadeDestino = cidadeDestino;
+                        },
+                        controller: _cidadeDestinoController,
+                        validator: (text) {
+                          if (text.isEmpty) return "Digite a cidade destino";
+                        },
+                        style: TextStyle(fontSize: 20),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
+                          hintText: "cidade destino",
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        inputFormatters: [maskData],
                         onSaved: (dataPartida) {
                           _viagens.dataPartida = dataPartida;
                         },
                         controller: _dataPartidaController,
                         keyboardType: TextInputType.datetime,
                         validator: (text) {
-                          if (text.isEmpty) return "Digite a data da partida";
+                          if (text.isEmpty)
+                            return "Digite a data da partida";
+
+                          final components = text.split("/");
+
+                          if (components.length == 3) {
+                            final dia = int.tryParse(components[0]);
+                            final mes = int.tryParse(components[1]);
+                            final ano = int.tryParse(components[2]);
+                            if (dia != null && mes != null && ano != null) {
+                              final date = DateTime(ano, mes, dia);
+                              if (date.year == ano && date.month == mes && date.day == dia) {
+                                return null;
+                              }
+                            }
+                          }
+                          return "Data incorreta";
                         },
                         style: TextStyle(fontSize: 20),
                         decoration: InputDecoration(
@@ -385,6 +476,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: 10,
                       ),
                       TextFormField(
+                        inputFormatters: [maskData],
                         onSaved: (dataChegada) {
                           _viagens.dataChegada = dataChegada;
                         },
@@ -393,6 +485,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         validator: (text) {
                           if (text.isEmpty)
                             return "Digite a data prevista da chegada";
+
+                          final components = text.split("/");
+
+                          if (components.length == 3) {
+                            final dia = int.tryParse(components[0]);
+                            final mes = int.tryParse(components[1]);
+                            final ano = int.tryParse(components[2]);
+                            if (dia != null && mes != null && ano != null) {
+                              final date = DateTime(ano, mes, dia);
+                              if (date.year == ano && date.month == mes && date.day == dia) {
+                                return null;
+                              }
+                            }
+                          }
+                          return "Data incorreta";
                         },
                         style: TextStyle(fontSize: 20),
                         decoration: InputDecoration(
@@ -405,8 +512,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                       ),
-
-                      //teste
                       SizedBox(
                         height: 10,
                       ),
@@ -461,7 +566,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           String moedaBD = valor;
                           moedaBD = moedaBD.replaceAll(".", "");
                           moedaBD = moedaBD.replaceAll(",", ".");
-                          //double valorDouble = double.parse(moedaBD);
                           _viagens.valor = moedaBD;
                         },
                         controller: _valorController,
@@ -491,20 +595,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: 10,
                       ),
                       TextFormField(
-                        onSaved: (descricao) {
-                          _viagens.descricao = descricao;
+                        onSaved: (produto) {
+                          _viagens.produto = produto;
                         },
                         maxLines: 50,
                         minLines: 1,
-                        controller: _descricaoController,
+                        controller: _produtoController,
                         keyboardType: TextInputType.text,
                         validator: (text) {
-                          if (text.isEmpty) return "Digite a descrição";
+                          if (text.isEmpty) return "Digite o produto";
                         },
                         style: TextStyle(fontSize: 20),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                          hintText: "descrição",
+                          hintText: "produto",
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -527,12 +631,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           textColor: Colors.white,
                           color: Color.fromARGB(255, 0, 100, 0),
                           onPressed: () {
+
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
 
                               _dialogContext = context;
 
-                              _salvarViagens();
+                              //_salvarViagens();
+                              _validarDatas();
+
                             }
                           },
                           padding: EdgeInsets.fromLTRB(122, 16, 122, 16),
