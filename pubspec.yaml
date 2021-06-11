@@ -47,6 +47,8 @@ dependencies:
   brasil_fields: ^0.4.0
   cpf_cnpj_validator: ^1.0.5
   validadores: ^1.0.2
+  auto_size_text: ^2.1.0
+  mask_text_input_formatter: ^1.0.6
 
 dev_dependencies:
   flutter_test:

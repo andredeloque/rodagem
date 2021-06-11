@@ -19,7 +19,7 @@ class User {
   String confirmPassword;
 
   String checkTypeUser (bool typeUser) {
-    return typeUser ? "motorista" : "transportadora";
+    return typeUser ? "transportadora" : "motorista";
   }
   DocumentReference get firestoreRef =>
       Firestore.instance.document('users/$id');

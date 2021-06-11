@@ -1,9 +1,13 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rodagem/models/register_viagens.dart';
+import 'package:rodagem/models/register_viagem.dart';
 
 class DetailScreen extends StatefulWidget {
-  RegisterViagens viagem;
+  RegisterViagem viagem;
 
   DetailScreen(this.viagem);
 
@@ -12,7 +16,10 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  RegisterViagens _viagem;
+  RegisterViagem _viagem;
+
+  String _idUsuarioLogado;
+  String _typeUser;
 
   List<Widget> _getListaImagens() {
     List<String> listaUrlImagens = _viagem.fotos;
@@ -28,10 +35,48 @@ class _DetailScreenState extends State<DetailScreen> {
     }).toList();
   }
 
+  _receberViagem() {
+    String statusPagamento = "Viagem Paga";
+    Firestore db = Firestore.instance;
+
+    Map<String, dynamic> dadosAtualizar = {"statusPagamento": statusPagamento};
+
+    db
+        .collection("minhas_viagens")
+        .document(_idUsuarioLogado)
+        .collection("viagens")
+        .document(_viagem.id)
+        .updateData(dadosAtualizar)
+        .then((_) {
+      Navigator.pop(context);
+    });
+  }
+
+  _recuperarDadosUsuario() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    FirebaseUser usuarioLogado = await auth.currentUser();
+    _idUsuarioLogado = usuarioLogado.uid;
+
+    Firestore db = Firestore.instance;
+    DocumentSnapshot snapshot =
+        await db.collection("users").document(_idUsuarioLogado).get();
+
+    Map<String, dynamic> dados = snapshot.data;
+
+    return dados["typeUser"];
+  }
+
+  _initialize() async {
+    _viagem = widget.viagem;
+    print(_viagem.statusPagamento);
+    _typeUser = await _recuperarDadosUsuario();
+    print(_typeUser);
+  }
+
   @override
   void initState() {
     super.initState();
-    _viagem = widget.viagem;
+    _initialize();
   }
 
   @override
@@ -66,6 +111,15 @@ class _DetailScreenState extends State<DetailScreen> {
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
                           color: Colors.green),
+                    ),
+                    Text(
+                      "${_viagem.statusPagamento}",
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: _viagem.statusPagamento == "Sem Pagamento"
+                              ? Colors.red
+                              : Colors.green),
                     ),
                     Text(
                       "${_viagem.empresa}",
@@ -120,14 +174,14 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Divider(),
                     ),
                     Text(
-                      "Descrição",
+                      "Produto",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      "${_viagem.descricao}",
+                      "${_viagem.produto}",
                       style: TextStyle(
                         fontSize: 18,
                       ),
@@ -152,6 +206,44 @@ class _DetailScreenState extends State<DetailScreen> {
                   ],
                 ),
               ),
+              if (_typeUser == "transportadora" &&
+                  _viagem.statusPagamento == "Sem Pagamento") ...[
+                Container(
+                  alignment: Alignment.center,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 0, 100, 0),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          padding: EdgeInsets.all(12),
+                          child: Center(
+                            child: AutoSizeText(
+                              "Receber Viagem",
+                              maxLines: 2,
+                              minFontSize: 10,
+                              maxFontSize: 32,
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 22),
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          _receberViagem();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                )
+              ]
             ],
           ),
         ],

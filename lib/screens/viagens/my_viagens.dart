@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rodagem/models/register_viagens.dart';
+import 'package:rodagem/models/register_viagem.dart';
 import 'package:rodagem/screens/register/edit_register_screen.dart';
 import 'package:rodagem/screens/register/register_screen.dart';
 import 'package:rodagem/widget/item_viagem.dart';
@@ -117,8 +117,8 @@ class _ViagemScreenState extends State<ViagemScreen> {
                           List<DocumentSnapshot> viagens =
                               querySnapshot.documents.toList();
                           DocumentSnapshot documentSnapshot = viagens[indice];
-                          RegisterViagens registerViagens =
-                              RegisterViagens.fromDocumentSnapshot(
+                          RegisterViagem registerViagens =
+                              RegisterViagem.fromDocumentSnapshot(
                                   documentSnapshot);
                           return ItemViagens(
                             viagens: registerViagens,

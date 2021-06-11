@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:rodagem/models/register_viagens.dart';
+import 'package:rodagem/models/register_viagem.dart';
 import 'package:rodagem/screens/viagens/detail_viagem.dart';
 import 'package:rodagem/widget/item_viagem.dart';
 
@@ -12,7 +12,7 @@ class AllViagens extends StatefulWidget {
 }
 
 class _AllViagensState extends State<AllViagens> {
-  String _urlImagemRecuperada;
+
   String _idUsuarioLogado;
 
   final _controller = StreamController<QuerySnapshot>.broadcast();
@@ -22,7 +22,6 @@ class _AllViagensState extends State<AllViagens> {
   @override
   void initState() {
     super.initState();
-    _recuperarDadosUsuario();
     _adicionarListenerViagens();
   }
 
@@ -38,26 +37,34 @@ class _AllViagensState extends State<AllViagens> {
 
     Map<String, dynamic> dados = snapshot.data;
 
-    if(dados["urlImagem"] != null) {
+    return dados["typeUser"];
 
-      setState(() {
-        _urlImagemRecuperada = dados["urlImagem"];
-      });
-
-    }
   }
 
   Future<Stream<QuerySnapshot>> _adicionarListenerViagens () async {
 
-    Firestore db = Firestore.instance;
-    Stream<QuerySnapshot> stream = db.collection("viagens")
-        .snapshots();
+    String _typeUser = await _recuperarDadosUsuario();
 
-    stream.listen((dados){
-      _controller.add(dados);
-    });
+    if(_typeUser == "motorista") {
+      Firestore db = Firestore.instance;
+      Stream<QuerySnapshot> stream = db.collection("minhas_viagens")
+          .document(_idUsuarioLogado)
+          .collection("viagens")
+          .snapshots();
 
+      stream.listen((dados) {
+        _controller.add(dados);
+      });
+    } else
+    if(_typeUser == "transportadora") {
+      Firestore db = Firestore.instance;
+      Stream<QuerySnapshot> stream = db.collection("viagens")
+          .snapshots();
 
+      stream.listen((dados) {
+        _controller.add(dados);
+      });
+    }
 
   }
 
@@ -66,7 +73,6 @@ class _AllViagensState extends State<AllViagens> {
     await Future.delayed(Duration(seconds: 2));
 
     setState(() {
-      _recuperarDadosUsuario();
       _adicionarListenerViagens();
     });
 
@@ -80,6 +86,7 @@ class _AllViagensState extends State<AllViagens> {
     var carregandoDados = Center(
       child: Column(
         children:<Widget> [
+          SizedBox(height: 20,),
           Text("Carregando Viagens"),
           CircularProgressIndicator(),
         ],
@@ -120,7 +127,7 @@ class _AllViagensState extends State<AllViagens> {
                           itemBuilder: (_, indice) {
                             List<DocumentSnapshot> viagens = querySnapshot.documents.toList();
                             DocumentSnapshot documentSnapshot = viagens[indice];
-                            RegisterViagens registerViagem = RegisterViagens.fromDocumentSnapshot(documentSnapshot);
+                            RegisterViagem registerViagem = RegisterViagem.fromDocumentSnapshot(documentSnapshot);
                               return ItemViagens(
                                 viagens: registerViagem,
                                 onTapItem: () {

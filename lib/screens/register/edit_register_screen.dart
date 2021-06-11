@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:rodagem/models/register_viagens.dart';
+import 'package:rodagem/models/register_viagem.dart';
 
 class EditRegisterScreen extends StatefulWidget {
-  RegisterViagens viagens;
+  RegisterViagem viagens;
   EditRegisterScreen(this.viagens);
 
   @override
@@ -20,7 +20,7 @@ class EditRegisterScreen extends StatefulWidget {
 }
 
 class _EditRegisterScreebState extends State<EditRegisterScreen> {
-  RegisterViagens _viagens;
+  RegisterViagem _viagens;
 
   BuildContext _dialogContext;
 
@@ -104,7 +104,7 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
     _propriedadeController.text = _viagens.empresa;
     _hectaresController.text = _viagens.peso;
     _valorController.text = _viagens.valor;
-    _descricaoController.text = _viagens.descricao;
+    _descricaoController.text = _viagens.produto;
     listaUrlImagens = _viagens.fotos;
   }
 
@@ -494,7 +494,7 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
                       ),
                       TextFormField(
                         onSaved: (descricao) {
-                          _viagens.descricao = descricao;
+                          _viagens.produto = descricao;
                         },
                         maxLines: 50,
                         minLines: 1,

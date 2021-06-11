@@ -46,12 +46,10 @@ class _EditProfileState extends State<EditProfile> {
     switch (origemImagem) {
       case "camera":
         imagemSelecionada =
-            //(await ImagePicker().getImage(source: ImageSource.camera)) as File;
             await ImagePicker.pickImage(source: ImageSource.camera);
         break;
       case "galeria":
         imagemSelecionada =
-            //(await ImagePicker().getImage(source: ImageSource.gallery)) as File;
             await ImagePicker.pickImage(source: ImageSource.gallery);
         break;
     }
