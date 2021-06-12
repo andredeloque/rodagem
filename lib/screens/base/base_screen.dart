@@ -21,22 +21,19 @@ class BaseScreen extends StatelessWidget {
     _idUsuarioLogado = usuarioLogado.uid;
 
     Firestore db = Firestore.instance;
-    DocumentSnapshot snapshot = await db.collection("users")
-        .document(_idUsuarioLogado)
-        .get();
+    DocumentSnapshot snapshot =
+        await db.collection("users").document(_idUsuarioLogado).get();
 
     Map<String, dynamic> dados = snapshot.data;
 
     _typeUser = dados["typeUser"];
 
     print(_typeUser);
-
   }
-
 
   @override
   Widget build(BuildContext context) {
-    _recuperarDadosUsuario();
+    // _recuperarDadosUsuario();
     return Provider(
       create: (_) => PageManager(pageController),
       child: PageView(
@@ -57,17 +54,17 @@ class BaseScreen extends StatelessWidget {
             ),
             body: ProfileScreen(),
           ),
-          //Scaffold(
-          //  drawer: CustomDrawer(),
-          //  appBar: AppBar(
-          //    title: const Text('Cadastrar viagem'),
-          //  ),
-          //  body: RegisterScreen(),
-          //),
           Scaffold(
             drawer: CustomDrawer(),
             appBar: AppBar(
-              title: const Text('Minhas viagens'),
+              title: const Text('Cadastrar viagem'),
+            ),
+            body: RegisterScreen(),
+          ),
+          Scaffold(
+            drawer: CustomDrawer(),
+            appBar: AppBar(
+              title: const Text('Editar viagens'),
             ),
             body: ViagemScreen(),
           ),

@@ -62,7 +62,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Icon(Icons.calendar_today_outlined, color: Colors.red, size: 60,),
+                Icon(
+                  Icons.calendar_today_outlined,
+                  color: Colors.red,
+                  size: 60,
+                ),
                 Text("Datas Incorretas"),
               ],
             ),
@@ -91,7 +95,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   _salvarViagens() async {
-
     _abrirDialog(_dialogContext);
 
     await _uploadImagens();
@@ -120,9 +123,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   _validarDatas() {
-    DateTime dataPartida = DateFormat("dd/MM/yyyy").parse(_dataPartidaController.text);
-    DateTime dataChegada = DateFormat("dd/MM/yyyy").parse(_dataChegadaController.text);
-    if(dataChegada.isBefore(dataPartida) == false) {
+    DateTime dataPartida =
+        DateFormat("dd/MM/yyyy").parse(_dataPartidaController.text);
+    DateTime dataChegada =
+        DateFormat("dd/MM/yyyy").parse(_dataChegadaController.text);
+    if (dataChegada.isBefore(dataPartida) == false) {
       _salvarViagens();
     } else {
       _abrirDialogDatas(context);
@@ -392,17 +397,71 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: 10,
                       ),
                       TextFormField(
+                        onSaved: (valor) {
+                          String moedaBD = valor;
+                          moedaBD = moedaBD.replaceAll(".", "");
+                          moedaBD = moedaBD.replaceAll(",", ".");
+                          _viagens.valor = moedaBD;
+                        },
+                        controller: _valorController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          RealInputFormatter(centavos: true),
+                        ],
+                        validator: (text) {
+                          if (text.isEmpty)
+                            return "Digite o valor do reembolso";
+                        },
+                        style: TextStyle(fontSize: 20),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
+                          hintText: "valor do rembolso",
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        onSaved: (propriedade) {
+                          _viagens.empresa = propriedade;
+                        },
+                        controller: _empresaController,
+                        keyboardType: TextInputType.text,
+                        validator: (text) {
+                          if (text.isEmpty) return "Descrição do reembolso";
+                        },
+                        style: TextStyle(fontSize: 20),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
+                          hintText: "Descrição do reembolso",
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
                         onSaved: (cidadeOrigem) {
                           _viagens.cidadeOrigem = cidadeOrigem;
                         },
                         controller: _cidadeOrigemController,
                         validator: (text) {
-                          if (text.isEmpty) return "Digite a cidade de origem";
+                          if (text.isEmpty) return "cidade de origem";
                         },
                         style: TextStyle(fontSize: 20),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                          hintText: "cidade origem",
+                          hintText: "cidade de origem",
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -443,8 +502,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: _dataPartidaController,
                         keyboardType: TextInputType.datetime,
                         validator: (text) {
-                          if (text.isEmpty)
-                            return "Digite a data da partida";
+                          if (text.isEmpty) return "Digite a data da partida";
 
                           final components = text.split("/");
 
@@ -454,7 +512,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             final ano = int.tryParse(components[2]);
                             if (dia != null && mes != null && ano != null) {
                               final date = DateTime(ano, mes, dia);
-                              if (date.year == ano && date.month == mes && date.day == dia) {
+                              if (date.year == ano &&
+                                  date.month == mes &&
+                                  date.day == dia) {
                                 return null;
                               }
                             }
@@ -494,7 +554,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             final ano = int.tryParse(components[2]);
                             if (dia != null && mes != null && ano != null) {
                               final date = DateTime(ano, mes, dia);
-                              if (date.year == ano && date.month == mes && date.day == dia) {
+                              if (date.year == ano &&
+                                  date.month == mes &&
+                                  date.day == dia) {
                                 return null;
                               }
                             }
@@ -505,29 +567,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
                           hintText: "data chegada",
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        onSaved: (propriedade) {
-                          _viagens.empresa = propriedade;
-                        },
-                        controller: _empresaController,
-                        keyboardType: TextInputType.text,
-                        validator: (text) {
-                          if (text.isEmpty) return "Digite o nome da Empresa";
-                        },
-                        style: TextStyle(fontSize: 20),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                          hintText: "nome da empresa",
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -551,36 +590,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
                           hintText: "peso da carga",
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        onSaved: (valor) {
-                          String moedaBD = valor;
-                          moedaBD = moedaBD.replaceAll(".", "");
-                          moedaBD = moedaBD.replaceAll(",", ".");
-                          _viagens.valor = moedaBD;
-                        },
-                        controller: _valorController,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          RealInputFormatter(centavos: true),
-                        ],
-                        validator: (text) {
-                          if (text.isEmpty) return "Digite o valor da carga";
-                        },
-                        style: TextStyle(fontSize: 20),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                          hintText: "valor da carga",
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -628,7 +637,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           textColor: Colors.white,
                           color: Color.fromARGB(255, 0, 100, 0),
                           onPressed: () {
-
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
 
@@ -636,7 +644,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                               //_salvarViagens();
                               _validarDatas();
-
                             }
                           },
                           padding: EdgeInsets.fromLTRB(122, 16, 122, 16),

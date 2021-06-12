@@ -33,6 +33,10 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
   final _hectaresController = TextEditingController();
   final _valorController = TextEditingController();
   final _descricaoController = TextEditingController();
+  final _cidadeOrigemController = TextEditingController();
+  final _cidadeDestinoController = TextEditingController();
+  final _dataPartidaController = TextEditingController();
+  final _dataChegadaController = TextEditingController();
 
   List<File> _listaImagens = List();
 
@@ -386,12 +390,45 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
                         controller: _propriedadeController,
                         keyboardType: TextInputType.text,
                         validator: (text) {
-                          if (text.isEmpty) return "Digite o nome da empresa";
+                          if (text.isEmpty)
+                            return "Digite a descrição da despesa";
                         },
                         style: TextStyle(fontSize: 20),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                          hintText: "nome da propriedade",
+                          hintText: "Descrição da despesa",
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        onSaved: (valor) {
+                          String moedaBD = valor;
+                          moedaBD = moedaBD.replaceAll(".", "");
+                          moedaBD = moedaBD.replaceAll(",", ".");
+                          //double valorDouble = double.parse(moedaBD);
+                          _viagens.valor = moedaBD;
+                        },
+                        controller: _valorController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          RealInputFormatter(centavos: true),
+                        ],
+                        validator: (text) {
+                          if (text.isEmpty)
+                            return "Digite o valor do reembolso";
+                        },
+                        style: TextStyle(fontSize: 20),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
+                          hintText: "valor do reembolso",
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -422,7 +459,6 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
                           ),
                         ),
                       ),
-                      //teste
                       SizedBox(
                         height: 10,
                       ),
@@ -434,7 +470,7 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
                           //double valorDouble = double.parse(moedaBD);
                           _viagens.valor = moedaBD;
                         },
-                        controller: _valorController,
+                        controller: _dataPartidaController,
                         keyboardType: TextInputType.datetime,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
@@ -447,38 +483,6 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
                           hintText: "data de partida",
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                      //teste
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        onSaved: (valor) {
-                          String moedaBD = valor;
-                          moedaBD = moedaBD.replaceAll(".", "");
-                          moedaBD = moedaBD.replaceAll(",", ".");
-                          //double valorDouble = double.parse(moedaBD);
-                          _viagens.valor = moedaBD;
-                        },
-                        controller: _valorController,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          RealInputFormatter(centavos: true),
-                        ],
-                        validator: (text) {
-                          if (text.isEmpty) return "Digite o valor da carga";
-                        },
-                        style: TextStyle(fontSize: 20),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                          hintText: "valor da carga",
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(

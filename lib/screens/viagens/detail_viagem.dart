@@ -139,6 +139,44 @@ class _DetailScreenState extends State<DetailScreen> {
                       padding: EdgeInsets.symmetric(vertical: 16),
                       child: Divider(),
                     ),
+                    //teste
+                    Text(
+                      "Cidade de origem",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "${_viagem.cidadeOrigem}",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: Divider(),
+                    ),
+                    //teste
+                    //teste
+                    Text(
+                      "Cidade de destino",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "${_viagem.cidadeDestino}",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: Divider(),
+                    ),
+                    //teste
                     Text(
                       "Data Partida",
                       style: TextStyle(

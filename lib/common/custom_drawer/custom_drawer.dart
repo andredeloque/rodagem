@@ -29,7 +29,7 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _recuperarDadosUsuario();
+    // _recuperarDadosUsuario();
     return Drawer(
       child: Stack(
         children: <Widget>[
@@ -59,16 +59,16 @@ class CustomDrawer extends StatelessWidget {
                 page: 1,
               ),
               //if(_typeUser == 'motorista')...[
-              _typeUser == null
-                  ? DrawerTile(
-                      iconData: Icons.playlist_add_check,
-                      title: 'Cadastrar viagem',
-                      page: 2,
-                    )
-                  : Container(),
+              //_typeUser == null
+              DrawerTile(
+                iconData: Icons.playlist_add_check,
+                title: 'Cadastrar viagem',
+                page: 2,
+              ),
+
               DrawerTile(
                 iconData: Icons.car_rental,
-                title: 'Minhas viagens',
+                title: 'Editar viagens',
                 page: 3,
               ),
               //],
