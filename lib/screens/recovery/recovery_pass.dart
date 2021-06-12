@@ -33,6 +33,7 @@ class _RecoverPassState extends State<RecoverPass> {
               TextFormField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
+                // ignore: missing_return
                 validator: (text) {
                   if (text.isEmpty || !text.contains("@"))
                     return "E-mail inválido";
@@ -54,6 +55,38 @@ class _RecoverPassState extends State<RecoverPass> {
               //ShapeBorder(),
               SizedBox(
                 height: 20,
+              ),
+
+              SizedBox(
+                height: 16.0,
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: FlatButton(
+                  onPressed: () {
+                    if (_emailController.text.isEmpty)
+                      _scaffoldKey.currentState.showSnackBar(
+                        SnackBar(
+                          content: Text("Insira seu email"),
+                          backgroundColor: Colors.redAccent,
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    else {
+                      if (_formKey.currentState.validate()) {}
+                      FirebaseAuth.instance
+                          .sendPasswordResetEmail(email: _emailController.text);
+                      _scaffoldKey.currentState.showSnackBar(
+                        SnackBar(
+                          content: Text(
+                              "Confira o link de recuperação no seu e-mail"),
+                          backgroundColor: Colors.green,
+                          duration: Duration(seconds: 3),
+                        ),
+                      );
+                    }
+                  },
+                ),
               ),
               ButtonTheme(
                 height: 45.0,
@@ -88,37 +121,6 @@ class _RecoverPassState extends State<RecoverPass> {
                     ),
                   ), //Text
                   color: Theme.of(context).primaryColor,
-                ), //RaisedButton
-              ), //ButtonTheme
-              SizedBox(
-                height: 16.0,
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: FlatButton(
-                  onPressed: () {
-                    if (_emailController.text.isEmpty)
-                      _scaffoldKey.currentState.showSnackBar(
-                        SnackBar(
-                          content: Text("Insira seu email"),
-                          backgroundColor: Colors.redAccent,
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
-                    else {
-                      if (_formKey.currentState.validate()) {}
-                      FirebaseAuth.instance
-                          .sendPasswordResetEmail(email: _emailController.text);
-                      _scaffoldKey.currentState.showSnackBar(
-                        SnackBar(
-                          content: Text(
-                              "Confira o link de recuperação no seu e-mail"),
-                          backgroundColor: Colors.green,
-                          duration: Duration(seconds: 3),
-                        ),
-                      );
-                    }
-                  },
                 ),
               ),
             ],

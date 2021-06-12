@@ -50,28 +50,30 @@ class CustomDrawer extends StatelessWidget {
               const Divider(),
               DrawerTile(
                 iconData: Icons.home,
-                title: 'Início',
+                title: 'Todas reembolsos',
                 page: 0,
               ),
-              DrawerTile(
-                iconData: Icons.admin_panel_settings,
-                title: 'Meu Perfil',
-                page: 1,
-              ),
+
               //if(_typeUser == 'motorista')...[
               //_typeUser == null
-              DrawerTile(
-                iconData: Icons.playlist_add_check,
-                title: 'Cadastrar viagem',
-                page: 2,
-              ),
 
-              DrawerTile(
-                iconData: Icons.car_rental,
-                title: 'Editar viagens',
-                page: 3,
-              ),
-              //],
+              if (_typeUser == "motorista") ...[
+                DrawerTile(
+                  iconData: Icons.admin_panel_settings,
+                  title: 'Meu Perfil',
+                  page: 1,
+                ),
+                DrawerTile(
+                  iconData: Icons.playlist_add_check,
+                  title: 'Cadastrar viagem',
+                  page: 2,
+                ),
+                DrawerTile(
+                  iconData: Icons.car_rental,
+                  title: 'Editar viagens',
+                  page: 3,
+                ),
+              ],
             ],
           ),
         ],
