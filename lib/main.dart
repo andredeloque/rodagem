@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rodagem/models/user_manager.dart';
@@ -21,11 +22,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: const Color(0xff990203),
-          scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),
+          scaffoldBackgroundColor: Colors.white,
           appBarTheme: const AppBarTheme(elevation: 0),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        initialRoute: '/base',
+        //initialRoute: '/base',
         onGenerateRoute: (settings) {
           switch (settings.name) {
             case '/login':
@@ -35,10 +36,40 @@ class MyApp extends StatelessWidget {
             case '/recovery':
               return MaterialPageRoute(builder: (_) => RecoverPass());
             case '/base':
-            default:
               return MaterialPageRoute(builder: (_) => BaseScreen());
+            default:
+              return MaterialPageRoute(builder: (_) => LoginScreen());
           }
         },
+      ),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Timer(Duration(seconds: 10), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => BaseScreen()),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        height: double.maxFinite,
+        width: double.maxFinite,
+        child: Image.asset("assets/logo.png"),
       ),
     );
   }
