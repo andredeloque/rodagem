@@ -8,8 +8,9 @@ import 'package:rodagem/models/register_viagem.dart';
 
 class DetailScreen extends StatefulWidget {
   RegisterViagem viagem;
+  String typeUser;
 
-  DetailScreen(this.viagem);
+  DetailScreen(this.viagem, this.typeUser);
 
   @override
   _DetailScreenState createState() => _DetailScreenState();
@@ -52,25 +53,9 @@ class _DetailScreenState extends State<DetailScreen> {
     });
   }
 
-  _recuperarDadosUsuario() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    FirebaseUser usuarioLogado = await auth.currentUser();
-    _idUsuarioLogado = usuarioLogado.uid;
-
-    Firestore db = Firestore.instance;
-    DocumentSnapshot snapshot =
-        await db.collection("users").document(_idUsuarioLogado).get();
-
-    Map<String, dynamic> dados = snapshot.data;
-
-    return dados["typeUser"];
-  }
-
   _initialize() async {
     _viagem = widget.viagem;
-    print(_viagem.statusPagamento);
-    _typeUser = await _recuperarDadosUsuario();
-    print(_typeUser);
+    _typeUser = widget.typeUser;
   }
 
   @override

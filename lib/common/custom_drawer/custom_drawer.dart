@@ -58,35 +58,17 @@ class CustomDrawer extends StatelessWidget {
               ),
 
               //if(_typeUser == 'motorista')...[
-              //_typeUser == null
-
-              Consumer<UserManager>(
-                builder: (_, userManager, __) {
-                  if (userManager.user.typeUser == "motorista") {
-                    return Column(
-                      children: <Widget>[
-                        const Divider(),
-                        DrawerTile(
-                          iconData: Icons.admin_panel_settings,
-                          title: 'Meu Perfil',
-                          page: 1,
-                        ),
-                        DrawerTile(
-                          iconData: Icons.playlist_add_check,
-                          title: 'Cadastrar reembolso',
-                          page: 2,
-                        ),
-                        DrawerTile(
-                          iconData: Icons.car_rental,
-                          title: 'Editar reembolso',
-                          page: 3,
-                        ),
-                      ],
-                    );
-                  }
-                  return Container();
-                },
+              DrawerTile(
+                iconData: Icons.playlist_add_check,
+                title: 'Cadastrar viagem',
+                page: 2,
               ),
+              DrawerTile(
+                iconData: Icons.car_rental,
+                title: 'Minhas viagens',
+                page: 3,
+              ),
+              //],
             ],
           ),
         ],
