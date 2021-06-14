@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:rodagem/common/custom_drawer/custom_drawer_header.dart';
 import 'package:rodagem/common/custom_drawer/drawer_tile.dart';
-import 'package:rodagem/models/user_manager.dart';
 
 class CustomDrawer extends StatelessWidget {
   String _idUsuarioLogado;
@@ -39,7 +37,9 @@ class CustomDrawer extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  const Color.fromARGB(255, 203, 236, 241),
+                  //  const Color.fromARGB(255, 203, 236, 241),
+                  // const Color.fromARGB(245, 245, 151, 148),
+                  const Color.fromARGB(255, 247, 194, 192),
                   Colors.white,
                 ],
                 begin: Alignment.topCenter,
