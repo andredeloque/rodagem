@@ -441,7 +441,7 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
                       ),
                       TextFormField(
                         onSaved: (hectares) {
-                          _viagens.peso = hectares;
+                          _viagens.valor = hectares;
                         },
                         controller: _hectaresController,
                         keyboardType: TextInputType.number,
@@ -510,7 +510,7 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
                         style: TextStyle(fontSize: 20),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                          hintText: "descrição",
+                          hintText: "descrição do reembolso",
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
