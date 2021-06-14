@@ -64,6 +64,8 @@ class _RecoverPassState extends State<RecoverPass> {
                 alignment: Alignment.centerRight,
                 child: FlatButton(
                   onPressed: () {
+                    FirebaseAuth.instance
+                        .sendPasswordResetEmail(email: _emailController.text);
                     if (_emailController.text.isEmpty)
                       _scaffoldKey.currentState.showSnackBar(
                         SnackBar(
@@ -92,6 +94,8 @@ class _RecoverPassState extends State<RecoverPass> {
                 height: 45.0,
                 child: RaisedButton(
                   onPressed: () {
+                    FirebaseAuth.instance
+                        .sendPasswordResetEmail(email: _emailController.text);
                     if (_emailController.text.isEmpty)
                       _scaffoldKey.currentState.showSnackBar(
                         SnackBar(
@@ -105,7 +109,7 @@ class _RecoverPassState extends State<RecoverPass> {
                         SnackBar(
                           content: Text(
                               "Confira o link de recuperação no seu e-mail"),
-                          backgroundColor: Theme.of(context).primaryColor,
+                          backgroundColor: Colors.green,
                           duration: Duration(seconds: 3),
                         ),
                       );
