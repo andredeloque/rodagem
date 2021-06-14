@@ -587,12 +587,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: _pesoController,
                         keyboardType: TextInputType.number,
                         validator: (text) {
-                          if (text.isEmpty) return "Digite o peso da carga";
+                          if (text.isEmpty) return "Digite o peso / quantidade";
                         },
                         style: TextStyle(fontSize: 20),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                          hintText: "peso da carga",
+                          hintText: "peso / quantidade",
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
