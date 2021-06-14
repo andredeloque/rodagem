@@ -44,19 +44,25 @@ class _DetailScreenState extends State<DetailScreen> {
     Map<String, dynamic> dadosAtualizar = {"statusPagamento": statusPagamento};
 
     db
-        .collection("minhas_viagens")
-        .document(_idUsuarioLogado)
         .collection("viagens")
         .document(_viagem.id)
         .updateData(dadosAtualizar)
         .then((_) {
-      Navigator.pop(context);
+      Navigator.of(context).pushReplacementNamed('/base');
     });
+  }
+
+  _recuperarDadosUsuario() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    FirebaseUser usuarioLogado = await auth.currentUser();
+    _idUsuarioLogado = usuarioLogado.uid;
   }
 
   _initialize() async {
     _viagem = widget.viagem;
     _typeUser = widget.typeUser;
+
+    await _recuperarDadosUsuario();
   }
 
   @override
@@ -81,7 +87,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   images: _getListaImagens(),
                   dotSize: 8,
                   dotBgColor: Colors.transparent,
-                  dotColor: Colors.white,
+                  dotColor: Colors.black,
                   autoplay: false,
                   dotIncreasedColor: Colors.greenAccent,
                 ),
