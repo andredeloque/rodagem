@@ -14,6 +14,7 @@ class AllViagens extends StatefulWidget {
 class _AllViagensState extends State<AllViagens> {
 
   String _idUsuarioLogado;
+  String _typeUser;
 
   final _controller = StreamController<QuerySnapshot>.broadcast();
 
@@ -43,7 +44,7 @@ class _AllViagensState extends State<AllViagens> {
 
   Future<Stream<QuerySnapshot>> _adicionarListenerViagens () async {
 
-    String _typeUser = await _recuperarDadosUsuario();
+   _typeUser  = await _recuperarDadosUsuario();
 
     if(_typeUser == "motorista") {
       Firestore db = Firestore.instance;
@@ -131,7 +132,7 @@ class _AllViagensState extends State<AllViagens> {
                               return ItemViagens(
                                 viagens: registerViagem,
                                 onTapItem: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(registerViagem)));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(registerViagem, _typeUser)));
                                 },
                               );
                             }
