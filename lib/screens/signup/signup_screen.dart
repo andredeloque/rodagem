@@ -1,31 +1,38 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rodagem/helpers/validators.dart';
 import 'package:rodagem/models/user.dart';
 import 'package:rodagem/models/user_manager.dart';
+import 'package:validadores/ValidarEmail.dart';
 
-class SignUpScreen extends StatelessWidget {
+enum SingingCharacter { motorista, transportadora }
+
+class SignUpScreen extends StatefulWidget {
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  SingingCharacter _character = SingingCharacter.motorista;
   final User user = User();
+
+  bool _typeUser = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: const Text('Criar Conta'),
+        title: const Text('Cadastro'),
         centerTitle: true,
       ),
       body: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-        image: DecorationImage(
-        fit: BoxFit.cover,
-        image: AssetImage("imagens/imagem_fundo.jpg")
-          ),
+          image: DecorationImage(
+              fit: BoxFit.cover, image: AssetImage("imagens/imagem_fundo.jpg")),
         ),
         child: Center(
           child: Card(
@@ -40,7 +47,7 @@ class SignUpScreen extends StatelessWidget {
                     children: <Widget>[
                       TextFormField(
                         decoration:
-                        const InputDecoration(hintText: 'Nome Completo'),
+                            const InputDecoration(hintText: 'Nome Completo'),
                         enabled: !userManager.loading,
                         validator: (name) {
                           if (name.isEmpty)
@@ -86,7 +93,7 @@ class SignUpScreen extends StatelessWidget {
                       ),
                       TextFormField(
                         decoration:
-                        const InputDecoration(hintText: 'Repita a Senha'),
+                            const InputDecoration(hintText: 'Repita a Senha'),
                         obscureText: true,
                         enabled: !userManager.loading,
                         validator: (pass) {
@@ -97,6 +104,88 @@ class SignUpScreen extends StatelessWidget {
                         },
                         onSaved: (pass) => user.confirmPassword = pass,
                       ),
+                      Padding(
+                        padding: EdgeInsets.all(0),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: RadioListTile(
+                                    title: Text("Transp."),
+                                    controlAffinity: ListTileControlAffinity.leading,
+                                    value: true,
+                                    groupValue: _typeUser,
+                                    onChanged: (bool choice) {
+                                      setState(() {
+                                        _typeUser = choice;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Expanded(
+                                  child: RadioListTile(
+                                    title: Text("Mot."),
+                                    controlAffinity: ListTileControlAffinity.leading,
+                                    value: false,
+                                    groupValue: _typeUser,
+                                    onChanged: (bool choice) {
+                                      setState(() {
+                                        _typeUser = choice;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      /*Padding(
+                        padding: EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          children: <Widget>[
+                            ListTile(
+                              title: const Text('Katia'),
+                              leading: Radio<SingingCharacter>(
+                                value: SingingCharacter.motorista,
+                                groupValue: _character,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _character = value;
+                                  });
+                                },
+                              ),
+                            ),
+                            ListTile(
+                              title: const Text('André'),
+                              leading: Radio<SingingCharacter>(
+                                value: SingingCharacter.transportadora,
+                                groupValue: _character,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _character = value;
+                                  });
+                                },
+                              ),
+                            ),
+                            /*Text("Transportadora"),
+                            const SizedBox(
+                              height: 16,
+                              width: 16,
+                            ),
+                            Switch(
+                                value: _typeUser,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    _typeUser = value;
+                                  });
+                                }
+                            ),
+                            Text("Motorista"),*/
+                          ],
+                        ),
+                      ),*/
                       const SizedBox(
                         height: 16,
                       ),
@@ -105,50 +194,54 @@ class SignUpScreen extends StatelessWidget {
                         child: RaisedButton(
                           color: Theme.of(context).primaryColor,
                           disabledColor:
-                          Theme.of(context).primaryColor.withAlpha(100),
+                              Theme.of(context).primaryColor.withAlpha(100),
                           textColor: Colors.white,
                           onPressed: userManager.loading
                               ? null
                               : () {
-                            if (formKey.currentState.validate()) {
-                              formKey.currentState.save();
+                                  if (formKey.currentState.validate()) {
+                                    formKey.currentState.save();
 
-                              if (user.password != user.confirmPassword) {
-                                scaffoldKey.currentState
-                                    .showSnackBar(SnackBar(
-                                  content:
-                                  const Text('Senhas não coincidem!'),
-                                  backgroundColor: Colors.red,
-                                ));
-                                return;
-                              }
+                                    if (user.password != user.confirmPassword) {
+                                      scaffoldKey.currentState
+                                          .showSnackBar(SnackBar(
+                                        content:
+                                            const Text('Senhas não coincidem!'),
+                                        backgroundColor: Colors.red,
+                                      ));
+                                      return;
+                                    }
 
-                              userManager.signUp(
-                                  user: user,
-                                  onSuccess: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  onFail: (e) {
-                                    scaffoldKey.currentState
-                                        .showSnackBar(SnackBar(
-                                      content:
-                                      Text('Falha ao cadastrar: $e'),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  });
-                            }
-                          },
+                                    user.typeUser =
+                                        user.checkTypeUser(_typeUser);
+
+                                    userManager.signUp(
+                                        user: user,
+                                        onSuccess: () {
+                                          Navigator.of(context)
+                                              .pushReplacementNamed('/base');
+                                        },
+                                        onFail: (e) {
+                                          scaffoldKey.currentState
+                                              .showSnackBar(SnackBar(
+                                            content:
+                                                Text('Falha ao cadastrar: $e'),
+                                            backgroundColor: Colors.red,
+                                          ));
+                                        });
+                                  }
+                                },
                           child: userManager.loading
                               ? CircularProgressIndicator(
-                            valueColor:
-                            AlwaysStoppedAnimation(Colors.white),
-                          )
+                                  valueColor:
+                                      AlwaysStoppedAnimation(Colors.white),
+                                )
                               : const Text(
-                            'Criar Conta',
-                            style: TextStyle(fontSize: 18),
-                          ),
+                                  'Cadastrar',
+                                  style: TextStyle(fontSize: 18),
+                                ),
                         ),
-                      )
+                      ),
                     ],
                   );
                 },
@@ -157,8 +250,6 @@ class SignUpScreen extends StatelessWidget {
           ),
         ),
       ),
-
-
     );
   }
 }

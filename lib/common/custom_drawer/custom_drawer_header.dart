@@ -22,7 +22,16 @@ class CustomDrawerHeader extends StatelessWidget {
                 ),
               ),
               Text(
-                'Olá ${userManager.user?.name ?? ''}',
+                'Olá, ${userManager.user?.name ?? ''}',
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                '${userManager.user?.typeUser ?? ''}'.toUpperCase(),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 style: TextStyle(
@@ -34,6 +43,7 @@ class CustomDrawerHeader extends StatelessWidget {
                 onTap: () {
                   if (userManager.isLoggedIn) {
                     userManager.signOut();
+                    Navigator.of(context).pushNamed('/login');
                   } else {
                     Navigator.of(context).pushNamed('/login');
                   }
