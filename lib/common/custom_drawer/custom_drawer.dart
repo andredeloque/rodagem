@@ -56,16 +56,19 @@ class CustomDrawer extends StatelessWidget {
                 title: 'Todos reembolsos',
                 page: 0,
               ),
-
-              //if(_typeUser == 'motorista')...[
+              DrawerTile(
+                iconData: Icons.admin_panel_settings,
+                title: 'Meu Perfil',
+                page: 1,
+              ),
               DrawerTile(
                 iconData: Icons.playlist_add_check,
-                title: 'Cadastrar viagem',
+                title: 'Cadastrar reembolso',
                 page: 2,
               ),
               DrawerTile(
                 iconData: Icons.car_rental,
-                title: 'Minhas viagens',
+                title: 'Editar reembolso',
                 page: 3,
               ),
               //],
