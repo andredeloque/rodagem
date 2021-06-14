@@ -44,8 +44,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   _selecionarIamgem() async {
     File imagemSelecionada;
 
-    imagemSelecionada =
-        await ImagePicker.pickImage(source: ImageSource.gallery);
+    imagemSelecionada = await ImagePicker.pickImage(source: ImageSource.camera);
 
     if (imagemSelecionada != null) {
       setState(() {
@@ -153,6 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
+/*
   _recuperarCep() async {
     String cepDigitado = _cepController.text;
 
@@ -175,6 +175,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
     }
   }
+*/
 
   @override
   void initState() {
@@ -314,9 +315,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           );
                         },
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
+
+                      /* removendo o cep
                       TextFormField(
                         onSaved: (cep) {
                           _viagens.cep = cep;
@@ -345,9 +345,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                       ),
+                      */
                       SizedBox(
                         height: 10,
                       ),
+                      /*
                       TextFormField(
                         onSaved: (cidade) {
                           _viagens.cidade = cidade;
@@ -396,6 +398,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(
                         height: 10,
                       ),
+                      */
                       TextFormField(
                         onSaved: (valor) {
                           String moedaBD = valor;

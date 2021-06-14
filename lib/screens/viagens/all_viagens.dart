@@ -12,12 +12,13 @@ class AllViagens extends StatefulWidget {
 }
 
 class _AllViagensState extends State<AllViagens> {
-
   String _idUsuarioLogado;
+  String _typeUser;
 
   final _controller = StreamController<QuerySnapshot>.broadcast();
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -31,23 +32,21 @@ class _AllViagensState extends State<AllViagens> {
     _idUsuarioLogado = usuarioLogado.uid;
 
     Firestore db = Firestore.instance;
-    DocumentSnapshot snapshot = await db.collection("users")
-        .document(_idUsuarioLogado)
-        .get();
+    DocumentSnapshot snapshot =
+        await db.collection("users").document(_idUsuarioLogado).get();
 
     Map<String, dynamic> dados = snapshot.data;
 
     return dados["typeUser"];
-
   }
 
-  Future<Stream<QuerySnapshot>> _adicionarListenerViagens () async {
+  Future<Stream<QuerySnapshot>> _adicionarListenerViagens() async {
+    _typeUser = await _recuperarDadosUsuario();
 
-    String _typeUser = await _recuperarDadosUsuario();
-
-    if(_typeUser == "motorista") {
+    if (_typeUser == "motorista") {
       Firestore db = Firestore.instance;
-      Stream<QuerySnapshot> stream = db.collection("minhas_viagens")
+      Stream<QuerySnapshot> stream = db
+          .collection("minhas_viagens")
           .document(_idUsuarioLogado)
           .collection("viagens")
           .snapshots();
@@ -55,17 +54,14 @@ class _AllViagensState extends State<AllViagens> {
       stream.listen((dados) {
         _controller.add(dados);
       });
-    } else
-    if(_typeUser == "transportadora") {
+    } else if (_typeUser == "transportadora") {
       Firestore db = Firestore.instance;
-      Stream<QuerySnapshot> stream = db.collection("viagens")
-          .snapshots();
+      Stream<QuerySnapshot> stream = db.collection("viagens").snapshots();
 
       stream.listen((dados) {
         _controller.add(dados);
       });
     }
-
   }
 
   Future<Null> refreshViagem() async {
@@ -79,14 +75,14 @@ class _AllViagensState extends State<AllViagens> {
     return null;
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     var carregandoDados = Center(
       child: Column(
-        children:<Widget> [
-          SizedBox(height: 20,),
+        children: <Widget>[
+          SizedBox(
+            height: 20,
+          ),
           Text("Carregando Viagens"),
           CircularProgressIndicator(),
         ],
@@ -102,7 +98,7 @@ class _AllViagensState extends State<AllViagens> {
             StreamBuilder(
               stream: _controller.stream,
               builder: (context, snapshot) {
-                switch(snapshot.connectionState) {
+                switch (snapshot.connectionState) {
                   case ConnectionState.none:
                   case ConnectionState.waiting:
                     return carregandoDados;
@@ -111,13 +107,15 @@ class _AllViagensState extends State<AllViagens> {
                   case ConnectionState.done:
                     QuerySnapshot querySnapshot = snapshot.data;
 
-                    if(querySnapshot.documents.length == 0) {
+                    if (querySnapshot.documents.length == 0) {
                       return Container(
                         padding: EdgeInsets.all(25),
-                        child: Text("Nenhuma viagem",
+                        child: Text(
+                          "Nenhuma viagem",
                           style: TextStyle(
                             fontSize: 20,
-                          ),),
+                          ),
+                        ),
                       );
                     }
 
@@ -125,17 +123,23 @@ class _AllViagensState extends State<AllViagens> {
                       child: ListView.builder(
                           itemCount: querySnapshot.documents.length,
                           itemBuilder: (_, indice) {
-                            List<DocumentSnapshot> viagens = querySnapshot.documents.toList();
+                            List<DocumentSnapshot> viagens =
+                                querySnapshot.documents.toList();
                             DocumentSnapshot documentSnapshot = viagens[indice];
-                            RegisterViagem registerViagem = RegisterViagem.fromDocumentSnapshot(documentSnapshot);
-                              return ItemViagens(
-                                viagens: registerViagem,
-                                onTapItem: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(registerViagem)));
-                                },
-                              );
-                            }
-                      ),
+                            RegisterViagem registerViagem =
+                                RegisterViagem.fromDocumentSnapshot(
+                                    documentSnapshot);
+                            return ItemViagens(
+                              viagens: registerViagem,
+                              onTapItem: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DetailScreen(
+                                            registerViagem, _typeUser)));
+                              },
+                            );
+                          }),
                     );
                 }
                 return Container();

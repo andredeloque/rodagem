@@ -5,11 +5,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rodagem/models/register_viagem.dart';
+import 'package:rodagem/models/user_manager.dart';
 
 class DetailScreen extends StatefulWidget {
   RegisterViagem viagem;
+  String typeUser;
 
-  DetailScreen(this.viagem);
+  DetailScreen(this.viagem, this.typeUser);
 
   @override
   _DetailScreenState createState() => _DetailScreenState();
@@ -52,25 +54,9 @@ class _DetailScreenState extends State<DetailScreen> {
     });
   }
 
-  _recuperarDadosUsuario() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    FirebaseUser usuarioLogado = await auth.currentUser();
-    _idUsuarioLogado = usuarioLogado.uid;
-
-    Firestore db = Firestore.instance;
-    DocumentSnapshot snapshot =
-        await db.collection("users").document(_idUsuarioLogado).get();
-
-    Map<String, dynamic> dados = snapshot.data;
-
-    return dados["typeUser"];
-  }
-
   _initialize() async {
     _viagem = widget.viagem;
-    print(_viagem.statusPagamento);
-    _typeUser = await _recuperarDadosUsuario();
-    print(_typeUser);
+    _typeUser = widget.typeUser;
   }
 
   @override
@@ -84,7 +70,6 @@ class _DetailScreenState extends State<DetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Viagem"),
-        centerTitle: true,
       ),
       body: Stack(
         children: [
@@ -96,7 +81,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   images: _getListaImagens(),
                   dotSize: 8,
                   dotBgColor: Colors.transparent,
-                  dotColor: Colors.black,
+                  dotColor: Colors.white,
                   autoplay: false,
                   dotIncreasedColor: Colors.greenAccent,
                 ),
@@ -140,44 +125,6 @@ class _DetailScreenState extends State<DetailScreen> {
                       padding: EdgeInsets.symmetric(vertical: 16),
                       child: Divider(),
                     ),
-                    //teste
-                    Text(
-                      "Cidade de origem",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      "${_viagem.cidadeOrigem}",
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      child: Divider(),
-                    ),
-                    //teste
-                    //teste
-                    Text(
-                      "Cidade de destino",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      "${_viagem.cidadeDestino}",
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      child: Divider(),
-                    ),
-                    //teste
                     Text(
                       "Data Partida",
                       style: TextStyle(
@@ -245,45 +192,44 @@ class _DetailScreenState extends State<DetailScreen> {
                   ],
                 ),
               ),
-              //devolver o if no lugar fechando na chave []
-              //if (_typeUser == "transportadora" &&
-              //   _viagem.statusPagamento == "Sem Pagamento") ...[
-              if (_typeUser == "transportadora") ...[],
-              Container(
-                alignment: Alignment.center,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 0, 100, 0),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: EdgeInsets.all(12),
-                        child: Center(
-                          child: AutoSizeText(
-                            "Receber Viagem",
-                            maxLines: 2,
-                            minFontSize: 10,
-                            maxFontSize: 32,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white, fontSize: 22),
+              if (_typeUser == "transportadora" &&
+                  _viagem.statusPagamento == "Sem Pagamento") ...[
+                Container(
+                  alignment: Alignment.center,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 0, 100, 0),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          padding: EdgeInsets.all(12),
+                          child: Center(
+                            child: AutoSizeText(
+                              "Receber Viagem",
+                              maxLines: 2,
+                              minFontSize: 10,
+                              maxFontSize: 32,
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 22),
+                            ),
                           ),
                         ),
+                        onTap: () {
+                          _receberViagem();
+                        },
                       ),
-                      onTap: () {
-                        _receberViagem();
-                      },
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              )
-              // ]
+                SizedBox(
+                  height: 10,
+                )
+              ]
             ],
           ),
         ],

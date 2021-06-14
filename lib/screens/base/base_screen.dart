@@ -33,7 +33,6 @@ class BaseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // _recuperarDadosUsuario();
     return Provider(
       create: (_) => PageManager(pageController),
       child: PageView(
