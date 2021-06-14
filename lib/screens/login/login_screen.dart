@@ -5,8 +5,10 @@ import 'package:rodagem/models/user.dart';
 import 'package:rodagem/models/user_manager.dart';
 
 class LoginScreen extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passController = TextEditingController();
+  final TextEditingController emailController =
+      TextEditingController(text: "andre@teste.com");
+  final TextEditingController passController =
+      TextEditingController(text: "123456");
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
