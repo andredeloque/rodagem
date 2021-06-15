@@ -183,124 +183,255 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
                 Container(
                   child: Column(
                     children: [
-                      FormField<List>(
-                        initialValue: _listaImagens,
-                        //não precisa de uma nova imagem pra atualizar Viagem
-                        validator: (imagens) {
-                          /*if (imagens.length == 0) {
+                      listaUrlImagens.length == 0
+                          ? FormField<List>(
+                              initialValue: _listaImagens,
+                              //não precisa de uma nova imagem pra atualizar Viagem
+                              validator: (imagens) {
+                                /*if (imagens.length == 0) {
                             return "Selecione uma imagem";
                           }*/
-                          return null;
-                        },
-                        builder: (state) {
-                          return Column(
-                            children: [
-                              Container(
-                                height: 100,
-                                child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: _listaImagens.length + 1,
-                                    itemBuilder: (context, indice) {
-                                      if (indice == _listaImagens.length) {
-                                        return Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 8),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              _selecionarIamgem();
-                                            },
-                                            child: CircleAvatar(
-                                              backgroundColor: Colors.grey[400],
-                                              radius: 50,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Icon(
-                                                    Icons.add_a_photo,
-                                                    size: 40,
-                                                    color: Colors.grey[100],
-                                                  ),
-                                                  Text(
-                                                    "Adicionar",
-                                                    style: TextStyle(
-                                                        color:
-                                                            Colors.grey[100]),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                      if (_listaImagens.length > 0) {
-                                        return Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 8),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (context) => Dialog(
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            Image.file(
-                                                                _listaImagens[
-                                                                    indice]),
-                                                            FlatButton(
-                                                              onPressed: () {
-                                                                setState(() {
-                                                                  _listaImagens
-                                                                      .removeAt(
-                                                                          indice);
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop();
-                                                                });
-                                                              },
-                                                              child: Text(
-                                                                  "Excluir"),
-                                                              textColor:
-                                                                  Colors.red,
-                                                            ),
-                                                          ],
+                                return null;
+                              },
+                              builder: (state) {
+                                return Column(
+                                  children: [
+                                    Container(
+                                      height: 100,
+                                      child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: _listaImagens.length + 1,
+                                          itemBuilder: (context, indice) {
+                                            if (indice ==
+                                                _listaImagens.length) {
+                                              return Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 8),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    _selecionarIamgem();
+                                                  },
+                                                  child: CircleAvatar(
+                                                    backgroundColor:
+                                                        Colors.grey[400],
+                                                    radius: 50,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Icon(
+                                                          Icons.add_a_photo,
+                                                          size: 40,
+                                                          color:
+                                                              Colors.grey[100],
                                                         ),
-                                                      ));
-                                            },
-                                            child: CircleAvatar(
-                                              radius: 50,
-                                              backgroundImage: FileImage(
-                                                  _listaImagens[indice]),
-                                              child: Container(
-                                                color: Color.fromRGBO(
-                                                    255, 255, 255, 0.4),
-                                                alignment: Alignment.center,
-                                                child: Icon(
-                                                  Icons.delete,
-                                                  color: Colors.red,
+                                                        Text(
+                                                          "Adicionar",
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .grey[100]),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                      return Container();
-                                    }),
-                              ),
-                              if (state.hasError)
-                                Container(
-                                  child: Text(
-                                    "${state.errorText}",
-                                    style: TextStyle(
-                                        color: Colors.red, fontSize: 14),
-                                  ),
-                                ),
-                            ],
-                          );
-                        },
-                      ),
+                                              );
+                                            }
+                                            if (_listaImagens.length > 0) {
+                                              return Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 8),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (context) => Dialog(
+                                                                  child: Column(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .min,
+                                                                    children: [
+                                                                      Image.file(
+                                                                          _listaImagens[
+                                                                              indice]),
+                                                                      FlatButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          setState(
+                                                                              () {
+                                                                            _listaImagens.removeAt(indice);
+                                                                            Navigator.of(context).pop();
+                                                                          });
+                                                                        },
+                                                                        child: Text(
+                                                                            "Excluir"),
+                                                                        textColor:
+                                                                            Colors.red,
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ));
+                                                  },
+                                                  child: CircleAvatar(
+                                                    radius: 50,
+                                                    backgroundImage: FileImage(
+                                                        _listaImagens[indice]),
+                                                    child: Container(
+                                                      color: Color.fromRGBO(
+                                                          255, 255, 255, 0.4),
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Icon(
+                                                        Icons.delete,
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            return Container();
+                                          }),
+                                    ),
+                                    if (state.hasError)
+                                      Container(
+                                        child: Text(
+                                          "${state.errorText}",
+                                          style: TextStyle(
+                                              color: Colors.red, fontSize: 14),
+                                        ),
+                                      ),
+                                  ],
+                                );
+                              },
+                            )
+                          : FormField<List>(
+                              initialValue: listaUrlImagens,
+                              //não precisa de uma nova imagem pra atualizar Viagem
+                              validator: (imagens) {
+                                /*if (imagens.length == 0) {
+                            return "Selecione uma imagem";
+                          }*/
+                                return null;
+                              },
+                              builder: (state) {
+                                return Column(
+                                  children: [
+                                    Container(
+                                      height: 100,
+                                      child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: listaUrlImagens.length + 1,
+                                          itemBuilder: (context, indice) {
+                                            if (indice ==
+                                                listaUrlImagens.length) {
+                                              return Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 8),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    _selecionarIamgem();
+                                                  },
+                                                  child: CircleAvatar(
+                                                    backgroundColor:
+                                                        Colors.grey[400],
+                                                    radius: 50,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Icon(
+                                                          Icons.add_a_photo,
+                                                          size: 40,
+                                                          color:
+                                                              Colors.grey[100],
+                                                        ),
+                                                        Text(
+                                                          "Adicionar",
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .grey[100]),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            if (listaUrlImagens.length > 0) {
+                                              return Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 8),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (context) => Dialog(
+                                                                  child: Column(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .min,
+                                                                    children: [
+                                                                      Image.network(
+                                                                          listaUrlImagens[
+                                                                              indice]),
+                                                                      FlatButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          setState(
+                                                                              () {
+                                                                            listaUrlImagens.removeAt(indice);
+                                                                            Navigator.of(context).pop();
+                                                                          });
+                                                                        },
+                                                                        child: Text(
+                                                                            "Excluir"),
+                                                                        textColor:
+                                                                            Colors.red,
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ));
+                                                  },
+                                                  child: CircleAvatar(
+                                                    radius: 50,
+                                                    backgroundImage:
+                                                        NetworkImage(
+                                                            listaUrlImagens[
+                                                                indice]),
+                                                    child: Container(
+                                                      color: Color.fromRGBO(
+                                                          255, 255, 255, 0.4),
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Icon(
+                                                        Icons.delete,
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            return Container();
+                                          }),
+                                    ),
+                                    if (state.hasError)
+                                      Container(
+                                        child: Text(
+                                          "${state.errorText}",
+                                          style: TextStyle(
+                                              color: Colors.red, fontSize: 14),
+                                        ),
+                                      ),
+                                  ],
+                                );
+                              },
+                            ),
                       SizedBox(
                         height: 10,
                       ),
@@ -410,8 +541,8 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
                       TextFormField(
                         onSaved: (valor) {
                           String moedaBD = valor;
-                          moedaBD = moedaBD.replaceAll(".", "");
-                          moedaBD = moedaBD.replaceAll(",", ".");
+                          //moedaBD = moedaBD.replaceAll(".", ",");
+                          //moedaBD = moedaBD.replaceAll(",", ".");
                           //double valorDouble = double.parse(moedaBD);
                           _viagens.valor = moedaBD;
                         },
@@ -490,9 +621,7 @@ class _EditRegisterScreebState extends State<EditRegisterScreen> {
                           ),
                         ),
                       ),*/
-                      SizedBox(
-                        height: 10,
-                      ),
+
                       SizedBox(
                         height: 10,
                       ),

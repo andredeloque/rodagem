@@ -132,6 +132,40 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Divider(),
                     ),
                     Text(
+                      "Cidade de Origem",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "${_viagem.cidadeOrigem}",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: Divider(),
+                    ),
+                    Text(
+                      "Cidade de Destino",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "${_viagem.cidadeDestino}",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: Divider(),
+                    ),
+                    Text(
                       "Data Partida",
                       style: TextStyle(
                         fontSize: 18,
@@ -183,7 +217,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Divider(),
                     ),
                     Text(
-                      "Peso",
+                      "Peso / quantidade",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

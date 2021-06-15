@@ -203,7 +203,7 @@ class _EditProfileState extends State<EditProfile> {
                         color: Colors.green,
                       ),
                       contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                      hintText: "Nome do Caminhão",
+                      hintText: "Apelido",
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
